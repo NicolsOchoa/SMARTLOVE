@@ -1,0 +1,29 @@
+{
+  "name": "reservas-api",
+  "version": "1.0.0",
+  "description": "API para gestionar reservas en el proyecto SMARTLOVE",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "reservas",
+    "api",
+    "express",
+    "mysql"
+  ],
+  "author": "Tu Nombre",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
+    "express": "^4.21.1",
+    "guava": "^0.0.5",
+    "lodash": "^4.17.21",
+    "mysql2": "^3.11.3",
+    "winston": "^3.15.0"
+  }
+}

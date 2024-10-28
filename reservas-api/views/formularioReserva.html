@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="reserva.css">
+    <title>Reserva</title>
+</head>
+<body>
+    <h1 id="tituloReserva">Reserva tu habitación</h1>
+    <form id="reservaForm">
+        <label for="nombreHuesped">Nombre:</label>
+        <input type="text" id="nombreHuesped" name="nombreHuesped" required>
+
+        <label for="telefono">Teléfono:</label>
+        <input type="text" id="telefono" name="telefono" required>
+
+        <label for="tipoHabitacion">Tipo de Habitación:</label>
+        <select id="tipoHabitacion" name="tipoHabitacion" required></select>
+
+        <label for="fechaEntrada">Fecha de Entrada:</label>
+        <input type="date" id="fechaEntrada" name="fechaEntrada" required>
+
+        <label for="fechaSalida">Fecha de Salida:</label>
+        <input type="date" id="fechaSalida" name="fechaSalida" required>
+
+        <label for="horario">Horario:</label>
+        <input type="time" id="horario" name="horario" required>
+
+        <button type="submit">Reservar</button>
+    </form>
+
+    <script>
+        // Cargar opciones de habitaciones desde el servidor
+        fetch('/api/habitaciones')
+            .then(response => {
+                if (!response.ok) throw new Error('Error cargando habitaciones');
+                return response.json();
+            })
+            .then(data => {
+                const select = document.getElementById('tipoHabitacion');
+                data.forEach(habitacion => {
+                    const option = document.createElement('option');
+                    option.value = habitacion.id;
+                    option.textContent = `${habitacion.nombre} - S/ ${habitacion.precio}`;
+                    select.appendChild(option);
+                });
+            })
+            .catch(error => console.error('Error cargando habitaciones:', error));
+
+        // Enviar el formulario al servidor
+        document.getElementById('reservaForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(e.target);
+            const data = Object.fromEntries(formData);
+
+            console.log("Datos enviados:", data); // Verificar datos antes de enviar
+
+            fetch('/api/reservas', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => {
+                console.log("Respuesta del servidor:", response);
+                if (!response.ok) throw new Error('Error al hacer la reserva');
+                return response.json();
+            })
+            .then(data => {
+                alert('Reserva creada con éxito');
+                console.log("Reserva creada:", data);
+                document.getElementById('reservaForm').reset(); // Limpiar el formulario
+            })
+            .catch(error => {
+                console.error('Error al enviar reserva:', error);
+                alert('Ocurrió un error al hacer la reserva. Inténtalo de nuevo.');
+            });
+        });
+    </script>
+</body>
+</html>

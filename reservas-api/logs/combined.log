@@ -1,0 +1,2 @@
+{"level":"info","message":"Reserva creada con éxito: {\"id\":6,\"nombreHuesped\":\"Jhon\",\"telefono\":\"991435644\",\"fechaEntrada\":\"2024-10-27\",\"fechaSalida\":\"2024-10-27\",\"tipoHabitacion\":\"1\",\"horario\":\"18:25\"}"}
+{"level":"info","message":"Reporte de reserva generado con éxito en Excel."}
